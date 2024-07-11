@@ -10,13 +10,15 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 		<!-- Add file: "tailwind.config.js" for TailWind autocomplete -->
 	</head>
-	<body class="p-10 text-center">
+	<body class="p-5 text-center">
 		<h1
+			id="titleText"
 			class="text-4xl font-semibold tracking-tighter text-center text-gray-900 lg:text-5xl text-balance"
 		>
 			Tallgjettespillet
 		</h1>
 		<p
+			id="instructions"
 			class="mx-auto mt-4 text-base font-medium text-center text-gray-600 text-balance"
 		>
 			Vi har valgt et tilfeldig tall mellom 1 og 100. Se om du kan gjette
@@ -24,7 +26,7 @@
 			var for høy eller for lav.
 		</p>
 
-		<div class="flex flex-col items-center mt-12 space-y-2">
+		<div class="flex flex-col items-center mt-5 space-y-2">
 			<div class="flex flex-col items-center">
 				<form>
 					<label
@@ -54,7 +56,7 @@
 		</div>
 
 		<div
-			class="flex flex-col items-center mt-12 space-y-2 text-center"
+			class="flex flex-col items-center mt-5 space-y-2 text-center"
 			id="resultParas"
 		>
 			<p
@@ -71,7 +73,7 @@
 			></p>
 			<h2
 				id="lowOrHi"
-				class="text-xl font-semibold tracking-tighter text-center text-gray-700 lg:text-5xl text-balance"
+				class="text-xl font-semibold tracking-tighter text-center text-gray-700 lg:text-2xl text-balance"
 			>
 				Skriv inn et tall og trykk på "Gjett" for å starte spillet!
 			</h2>
@@ -85,6 +87,8 @@
 			const lowOrHi = document.querySelector("#lowOrHi");
 			const remainingGuesses =
 				document.querySelector("#remainingGuesses");
+			const instructions = document.querySelector("#instructions");
+			const titleText = document.querySelector("#titleText");
 
 			const guessSubmit = document.querySelector("#guessSubmit");
 			const guessField = document.querySelector("#guessField");
@@ -98,6 +102,8 @@
 				if (guessCount === 1) {
 					guesses.textContent = `Dine gjett: `;
 				}
+				instructions.textContent = "";
+				titleText.textContent = "";
 				guesses.textContent = `${guesses.textContent} ${userGuess}`;
 				remainingGuesses.textContent = `${10 - guessCount} gjenværende`;
 				2;
@@ -156,6 +162,7 @@
 
 				resetButton.parentNode.removeChild(resetButton);
 
+				titleText.textContent = "Tallgjettespillet";
 				guessField.disabled = false;
 				guessSubmit.disabled = false;
 				guessField.value = "";
