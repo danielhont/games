@@ -10,7 +10,7 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 		<!-- Add file: "tailwind.config.js" for TailWind autocomplete -->
 	</head>
-	<body class="p-5 text-center">
+	<body class="px-5 pt-4 text-center">
 		<h1
 			id="titleText"
 			class="text-4xl font-semibold tracking-tighter text-center text-gray-900 lg:text-5xl text-balance"
@@ -26,7 +26,7 @@
 			var for høy eller for lav.
 		</p>
 
-		<div class="flex flex-col items-center mt-5 space-y-2">
+		<div class="flex flex-col items-center mt-2 space-y-2">
 			<div class="flex flex-col items-center">
 				<form>
 					<label
@@ -46,7 +46,7 @@
 					<button
 						type="submit"
 						id="guessSubmit"
-						class="inline-flex items-center justify-center w-full h-12 gap-3 px-5 py-3 mt-5 font-medium text-white duration-200 bg-green-900 rounded-xl hover:bg-green-700 focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:bg-gray-200"
+						class="inline-flex items-center justify-center h-8 gap-3 px-5 py-3 mt-5 font-medium text-white duration-200 bg-green-900 rounded w-28 hover:bg-green-700 focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:bg-gray-200"
 						aria-label="Primary action"
 					>
 						Gjett
@@ -60,7 +60,7 @@
 			id="resultParas"
 		>
 			<p
-				class="p-5 text-white rounded"
+				class="px-5 text-white rounded"
 				id="lastResult"
 			></p>
 			<p
@@ -110,7 +110,7 @@
 
 				if (userGuess === randomNumber) {
 					lastResult.innerHTML = `Gratulerer🎉🎉 Du klarte det!<br>${
-						(10 - guessCount) * 10
+						(11 - guessCount) * 10
 					} poeng!`;
 					lastResult.style.backgroundColor = "green";
 					lastResult.style.color = "white";
