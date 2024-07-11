@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="nb">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Daniels Tallgjettespill</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<!-- Add file: "tailwind.config.js" for TailWind autocomplete -->
+	</head>
+	<body class="p-10 text-center">
+		<h1
+			class="text-4xl font-semibold tracking-tighter text-center text-gray-900 lg:text-5xl text-balance"
+		>
+			Tallgjettespillet
+		</h1>
+		<p
+			class="mx-auto mt-4 text-base font-medium text-center text-gray-600 text-balance"
+		>
+			Vi har valgt et tilfeldig tall mellom 1 og 100. Se om du kan gjette
+			det på 10 forsøk eller færre. Vi vil fortelle deg om gjetningen din
+			var for høy eller for lav.
+		</p>
+
+		<div class="flex flex-col items-center mt-12 space-y-2">
+			<div class="flex flex-col items-center">
+				<form>
+					<label
+						for="guessField"
+						class="block mb-3 text-sm font-medium text-gray-700"
+					>
+						Skriv inn et tall
+					</label>
+					<input
+						type="number"
+						min="1"
+						max="100"
+						required
+						id="guessField"
+						class="block w-full h-12 px-4 py-2 text-gray-800 duration-200 border rounded-lg appearance-none bg-chalk border-zinc-300 placeholder-zinc-300 focus:border-zinc-800 focus:outline-none focus:ring-zinc-300 sm:text-sm"
+					/>
+					<button
+						type="submit"
+						id="guessSubmit"
+						class="inline-flex items-center justify-center w-full h-12 gap-3 px-5 py-3 mt-5 font-medium text-white duration-200 bg-green-900 rounded-xl hover:bg-green-700 focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:bg-gray-200"
+						aria-label="Primary action"
+					>
+						Gjett
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<div
+			class="flex flex-col items-center mt-12 space-y-2 text-center"
+			id="resultParas"
+		>
+			<p
+				class="p-5 text-white rounded"
+				id="lastResult"
+			></p>
+			<p
+				id="guesses"
+				class="mx-auto mt-4 text-base font-medium text-center text-gray-600 text-balance"
+			></p>
+			<p
+				id="remainingGuesses"
+				class="mx-auto mt-4 text-base font-medium text-center text-gray-600 text-balance"
+			></p>
+			<h2
+				id="lowOrHi"
+				class="text-xl font-semibold tracking-tighter text-center text-gray-700 lg:text-5xl text-balance"
+			>
+				Skriv inn et tall og trykk på "Gjett" for å starte spillet!
+			</h2>
+		</div>
+		<script>
+			let randomNumber = Math.floor(Math.random() * 100) + 1;
+			console.log(randomNumber);
+
+			const guesses = document.querySelector("#guesses");
+			const lastResult = document.querySelector("#lastResult");
+			const lowOrHi = document.querySelector("#lowOrHi");
+			const remainingGuesses =
+				document.querySelector("#remainingGuesses");
+
+			const guessSubmit = document.querySelector("#guessSubmit");
+			const guessField = document.querySelector("#guessField");
+
+			let guessCount = 1;
+			let resetButton;
+
+			function checkGuess() {
+				event.preventDefault(); // Prevent the form from submitting
+				const userGuess = Number(guessField.value);
+				if (guessCount === 1) {
+					guesses.textContent = `Dine gjett: `;
+				}
+				guesses.textContent = `${guesses.textContent} ${userGuess}`;
+				remainingGuesses.textContent = `${10 - guessCount} gjenværende`;
+				2;
+
+				if (userGuess === randomNumber) {
+					lastResult.innerHTML = `Gratulerer🎉🎉 Du klarte det!<br>${
+						(10 - guessCount) * 10
+					} poeng!`;
+					lastResult.style.backgroundColor = "green";
+					lastResult.style.color = "white";
+					lowOrHi.textContent = "";
+					setGameOver();
+				} else if (guessCount === 10) {
+					lastResult.textContent = "!!!GAME OVER!!!";
+					setGameOver();
+				} else {
+					lastResult.textContent = "Feil!!";
+					lastResult.style.backgroundColor = "red";
+					if (userGuess < randomNumber) {
+						lowOrHi.textContent = "Siste gjett var for lavt!";
+					} else {
+						lowOrHi.textContent = "Siste gjett var for høyt!";
+					}
+				}
+
+				guessCount++;
+				guessField.value = "";
+				guessField.focus();
+			}
+
+			guessSubmit.addEventListener("click", checkGuess);
+			document.querySelector(form).addEventListener("submit", checkGuess);
+
+			function setGameOver() {
+				guessField.disabled = true;
+				guessSubmit.disabled = true;
+				resetButton = document.createElement("button");
+				resetButton.textContent = "Start nytt spill";
+				resetButton.classList.add(
+					"bg-green-500",
+					"text-white",
+					"p-2",
+					"rounded"
+				);
+				document.body.append(resetButton);
+				resetButton.addEventListener("click", resetGame);
+			}
+
+			function resetGame() {
+				guessCount = 1;
+
+				const resetParas = document.querySelectorAll("#resultParas p");
+				for (const resetPara of resetParas) {
+					resetPara.textContent = "";
+				}
+
+				resetButton.parentNode.removeChild(resetButton);
+
+				guessField.disabled = false;
+				guessSubmit.disabled = false;
+				guessField.value = "";
+				lowOrHi.textContent =
+					"Skriv inn et tall og trykk på 'Gjett' for å starte spillet på nytt!";
+				guessField.focus();
+
+				lastResult.style.backgroundColor = "white";
+
+				randomNumber = Math.floor(Math.random() * 100) + 1;
+			}
+		</script>
+	</body>
+</html>
